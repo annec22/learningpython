@@ -12,12 +12,14 @@
 print("Hi! Welcome to this simple shopping list app.")
 print("Please enter 'DONE' to exit. Happy shopping!")
 item_list = []
-user_input = input("What do you want to buy? ")
 
-
-while (user_input!="DONE"):
+while True:
+  user_input = input("Enter item: ")
+  
+  if user_input == "DONE":
+    break;
+  
   item_list.append(user_input)
-  user_input = input("What else? ")
   
 print("Here's your shopping list: ")
 print("="*20)
