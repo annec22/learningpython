@@ -1,5 +1,5 @@
 # Filename: shopping_list_app.py
-# Version: Python 3
+# Versions
 # A simple python programming app that showcases use of:
 #      - list
 #      - loops   
@@ -9,6 +9,8 @@
 #      - Once list is done, "DONE" should be entered to quit the app
 #      - Once quit is triggered by user, it displays all the items on the list
 
+print("Hi! Welcome to this simple shopping list app.")
+print("Please enter 'DONE' to exit. Happy shopping!")
 item_list = []
 user_input = input("What do you want to buy? ")
 
