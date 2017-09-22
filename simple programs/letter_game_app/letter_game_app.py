@@ -6,7 +6,8 @@
 #	- functions, call function within itself
 #	- user input
 #	- importing libraries
-#	- str methods
+#	- str methods (is alpha)
+#	- conditions (and or)
 # Features:
 #	- pick random word from a list or words
 #	- draw spaces
