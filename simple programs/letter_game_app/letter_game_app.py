@@ -18,6 +18,11 @@
 #	- prints misses
 #	- prints win/lose
 # 	- option to start a new game
+#	- clear screen
+#	- populate database from list of words
+# To do's:
+#	- organize into functions
+#	- limit chances according to word length
 import random
 import os
 import sys
