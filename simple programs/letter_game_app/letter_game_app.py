@@ -1,13 +1,14 @@
 # Filename: letter_game_app.py
 # Versions: Python 3
 # A game similar to hangman. A simple python programming app that showcases use of:
-#	- lists
+#	- lists, list comprehension
 #	- loops, use while-else
 #	- functions, call function within itself
 #	- user input
-#	- importing libraries
+#	- importing libraries - random choice, os, sys
 #	- str methods (is alpha)
 #	- conditions (and or)
+#	- open file, open(), and with
 # Features:
 #	- pick random word from a list or words
 #	- draw spaces
@@ -18,12 +19,25 @@
 #	- prints win/lose
 # 	- option to start a new game
 import random
+import os
+import sys
 
-list = ["razzmatazz", "bumfuzzled", "bumfuzzles", "whizzbangs", "bemuzzling", "puzzlingly", "unpuzzling", "embezzling", "unmuzzling", "zigzagging", "puzzlement", "scuzzballs", "dizzyingly", "blackjacks", "blizzardly", "bedazzling", "dazzlingly", "pozzolanic", "crackajack", "showbizzes", "mizzenmast", "kolkhoznik", "schnozzles", "skyjacking", "embezzlers", "jackknifed", "jackknives", "kibbutznik", "japanizing", "maximizing", "jarovizing", "cheapjacks", "equivoques", "lumberjack", "zigzaggers"]
+def populate_list():
+	with open('letter_game_app_words.txt') as f:
+		read_data = [line.strip() for line in f]
+	return read_data
+
+def clear():
+	if os.name == 'nt':
+		os.system('cls')
+	else:
+		os.system('clear')
 
 def new_game():
+	list = populate_list()
+	clear()
 	max_misses = 5
-	word = list[random.randint(0,len(list)-1)]
+	word = random.choice(list)
 	print(word)
 	guessed_hit = []
 	guessed_miss = []
@@ -67,7 +81,8 @@ def new_game():
 			new_game()
 			
 		print("Bye now!")
-
+		sys.exit()
+populate_list()
 new_game()	
 	
 	
