@@ -20,7 +20,6 @@
 # 	- option to start a new game
 #	- clear screen
 #	- populate database from list of words
-# To do's:
 #	- organize into functions
 #	- limit chances according to word length
 import random
@@ -37,51 +36,69 @@ def clear():
 		os.system('cls')
 	else:
 		os.system('clear')
+		
+def is_valid_guess(guess, guessed_hit, guessed_miss):
+	if (not guess.isalpha()) or len(guess) != 1:
+		print("That's not a valid guess.")
+		return False
+	elif(guess.lower() in guessed_hit + guessed_miss):
+		print("You've given that already.")
+		return False
+	return True
+	
+def print_hits(word,hits):
+	for letter in word:
+		if letter in hits:
+			print(letter, " ", end="")
+		else:
+			print("_", " ", end="")
+	print()
+
+def print_misses(misses,max_misses):
+	print("Misses: {}/{}".format(len(misses),max_misses))
+	for miss in misses:
+		print(miss, " ", end="")
+	print()
+	
+def player_wins(word, hits):
+	return len(set(word)) == len(hits)
 
 def new_game():
 	list = populate_list()
 	clear()
-	max_misses = 5
 	word = random.choice(list)
-	print(word)
+	max_misses = int(len(word)/2)
+	print(word) #debug line
 	guessed_hit = []
 	guessed_miss = []
 	
+	print("You got {} chances. Good luck!".format(max_misses))
+	
 	while len(guessed_miss) < max_misses:
+		print_hits(word,guessed_hit)
+		print_misses(guessed_miss,max_misses)
 		guess = input("Give me a letter: ")
 		
-		if (not guess.isalpha()) or len(guess) != 1:	
-			print("That's not a valid guess.")
+		if not is_valid_guess(guess, guessed_hit, guessed_miss):
+			clear()
 			continue
-		elif(guess in guessed_hit + guessed_miss):
-			print("You've given that already.")
-			continue
-			
+		clear()
+		guess = guess.lower()
 		if guess in word:
 			guessed_hit.append(guess)
 		else:
 			guessed_miss.append(guess)
-				
-		for letter in word:
-			if letter in guessed_hit:
-				print(letter, " ", end="")
-			else:
-				print("_", " ", end="")
-		print()
 		
-		print("Misses: ")
-		for miss in guessed_miss:
-			print(miss, " ", end="")
-		print()
-		
-		if len(set(word)) == len(guessed_hit):
+		if player_wins(word, guessed_hit):
 			print("You guessed the word. Great! You win!")
 			max_misses = -1
 	else:
+		print_hits(word,guessed_hit)
 		if len(guessed_miss) == max_misses:
-			print("You've run out of chances! The word was {}".format(word))
+			print("You've run out of chances! The word was {}".format(word.upper()))
 			print("You Lose!")
-		if (input("Play again [Y-yes, anything else -no]?") == "Y"):
+			
+		if (input("Play again [Y-yes, anything else -no]?").lower() == "y"):
 			guess
 			new_game()
 			
