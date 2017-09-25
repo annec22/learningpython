@@ -36,41 +36,49 @@ def get_locations():
     return random.sample(CELLS,3)
 
 def move_player(player, move):
-    # get the player's location
     x,y = player
-    # if move == LEFT, x-1
     if move == "LEFT":
         x -= 1
-    # if move == RIGHT, x+1
     if move == "RIGHT":
         x += 1
-    # if move == UP, y-1
     if move == "UP":
         y -= 1
-    # if move == DOWN, y+1
     if move == "DOWN":
         y += 1
-    player = x,y
-    return player
+    return x,y
 
 def get_moves(player):
     moves = ["LEFT", "RIGHT", "UP", "DOWN"]
     x,y = player
-    # if player's y == 0, they can't move up
     if y == 0:
         moves.remove("UP")
-    # if player's y == 4, they can't move down
     if y == 4:
         moves.remove("DOWN")
-    # if player's x == 0, they can't move left
     if x == 0:
         moves.remove("LEFT")
-    # if player's x == 4, they can't move right
     if x == 4:
         moves.remove("RIGHT")
     return moves
 
+def draw_map(player):
+    print(' _'*5)
+    tile = "|{}"
 
+    for cell in CELLS:
+        x, y = cell
+        if x < 4:
+            line_end = ""
+            if cell == player:
+                output = tile.format("X")
+            else:
+                output = tile.format("_")
+        else:
+            line_end = "\n"
+            if cell == player:
+                output = tile.format("X|")
+            else:
+                output = tile.format("_|")
+        print(output,end=line_end)
 
 def play_game():
     monster, door, player = get_locations()
@@ -79,8 +87,12 @@ def play_game():
     moves = get_moves(player)
     print("Welcome to the dungeon!")
     print("Enter QUIT to quit")
+    input("Press ENTER to start")
+    clear_screen()
+
     game_over = False
     while not game_over:
+        draw_map(player)
         print("You're currently in room {}".format(player)) # fill with player position
         print("You can move {}".format(','.join(moves))) #fill  with available moves
         moves = get_moves(player)
@@ -111,8 +123,9 @@ def play_game():
     else:
         play_again = input("Do you want to play again? Y/N: ").upper()
         if play_again == "Y":
+            clear_screen()
             play_game()
-
+        print("Bye now!")
 
 
 play_game()
